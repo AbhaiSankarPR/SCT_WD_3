@@ -1,0 +1,258 @@
+<!-- Code by Abhai Sankar P R -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+    <body>         
+        <h1>Tic Tac Toe</h1>
+        <div class="container">
+            <div class="game">
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+                <button class="box"></button>
+            </div>
+        </div>
+        <button class="reset" onclick="reset()">Reset</button>
+        <textarea id="wins"></textarea>
+        <footer>
+           Made by Abhai Sankar P R
+    <p>
+        <a href="https://github.com/AbhaiSankarPR" target="_blank">
+            https://github.com/AbhaiSankarPR
+        </a>
+    </p>
+          </footer>  
+    </body>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+        *{
+    margin: 0;
+    text-align: center;
+    box-sizing: border-box;
+            user-select:none;
+}
+        footer{
+            font-size:10px;
+            color:white;
+            font-family:arial;
+            padding:10px;
+            text-align:right;
+            opacity:0.3;
+        }
+        footer p{
+            text-align:right;
+            color:white;
+            font-size:11px;
+        }
+body{
+    background-color: #896641;
+    font-family: "Playwrite GB S", cursive;
+  font-optical-sizing: auto;
+  font-weight: 800;
+    font-style: normal;
+}
+h1{
+    margin-top: 20px;
+    color: #FCFAEE;
+    font-size: 40px;
+}
+.container{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game{
+    height: 60vmin;
+    width: 60vmin;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5vmin;
+}
+button[disabled]{
+    background-color: #7f8043;
+    cursor: not-allowed;
+    opacity: 1;
+    color: #FCFAEE;
+}
+.box{
+    height: 19vh;
+    width: 19vh;
+    font-family: "Libre Baskerville", serif;
+    font-weight: 700;
+    background-color: #A5B68D;
+    font-size: 5vh;
+    cursor: pointer;
+    border-radius: 11px;
+    border-style:none;
+    box-shadow: 9px 20px 20px rgb(141, 70, 36);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.box:hover{
+    background-color: rgb(146, 177, 177);
+    transform: scale(1.05);
+}
+.reset{
+    height: 9vh;
+    width: 14vh;
+    border-radius: 20%;
+    font-family: cursive;
+    background-color: #e4cca2;
+    color: #2e4dd5;
+    font-size: 3vh;
+    border:onset;
+    transition: all 0.2s;
+}   
+ .reset:active{
+     background-color:green;
+     color:#e4cca2;
+     transform: scale(1.1);
+     border-radius:40px;
+ }
+#wins{
+        pointer-events:none;
+        height:50px;
+    font-size:10px;
+    background-color:transparent;
+    border:none;
+    font-family: "Playwrite GB S", cursive;
+    overflow: hidden;
+    color:yellow;
+    resize: none; 
+    }
+/* Mobile-specific styles */
+@media screen and (max-width: 412px) {            
+    body {
+        height: 100vh;
+        width: 100vw;
+    }
+    .game {
+        height: 40vh;
+        width: 40vh;
+        gap: 1vmin;
+    }
+    .box {
+        height: 12vh;
+        width: 12vh;
+        margin-left: 5.5px;
+        font-size: 3vh;
+        border-radius: 6px;
+    }
+    
+    .reset {
+        height: 7vh;
+        width: 10vh;
+        font-size: 2vh;
+        margin-top: 5px;
+    }
+}
+    </style>
+    <script>
+        let winX=0;
+        let winO=0;
+        let draw=7;
+    let b = new Array(9).fill(0);
+        let boxes=document.querySelectorAll(".box");
+        let resetbtn=document.querySelector(".a");
+        let turn0=true;
+         win=[[0,1,2],[0,3,6],[0,4,8],[1,4,7],[2,5,8],[2,4,6],[3,4,5],[6,7,8]];
+        boxes.forEach((box)=>{
+            box.addEventListener("click",()=>{
+                console.log("Clicked");
+                if(turn0){
+                    box.innerText="X";
+                    turn0=false;
+                }
+                else{
+                    box.innerText="O";
+                    turn0=true;
+                }
+                box.disabled=true;
+                check();
+                winner();
+            })
+        })
+        const reset=()=>{
+            boxes.forEach((box)=>{
+                box.innerText="";
+                box.disabled=false;
+                turn0=true;
+
+            });
+        }
+        let flag=1;
+        const winner=()=>{
+            for(let pattern of win){
+                let pos1=boxes[pattern[0]].innerText;
+                let pos2=boxes[pattern[1]].innerText;
+                let pos3=boxes[pattern[2]].innerText;
+                if(pos1!=""&&pos2!=""&&pos3!=""){
+                    if(pos1==pos2 && pos2==pos3){
+                        console.log("Winner");
+                        if(turn0)
+                            {alert(" O Win");
+                                winO++;
+                                displays();
+                            // reset();
+                            boxes.forEach((box)=>{
+                                box.disabled=true;
+                            })
+                            flag=0;
+                          }
+                        else   
+                          {alert(" X Win");
+                              winX++;
+                             displays();
+                        //  reset();
+                        boxes.forEach((box)=>{
+                                box.disabled=true;
+                            })
+                         flag=0;
+                          }
+                    }
+                }
+            }
+            if(flag)
+            if(b[0]==1&&b[1]==1&&b[2]==1&&b[3]==1&&b[4]==1&&b[5]==1&&b[6]==1&&b[7]==1&&b[8]==1)
+                {
+                    alert("It's a draw\n");
+               
+            } 
+            changereset();
+            flag=1;
+        }
+        function changereset(){
+            let reset2restart=document.querySelector(".reset");
+            if(!flag){
+                 reset2restart.innerText="Restart";
+                }
+            else{
+                reset2restart.innerText="Reset";
+            }
+    }
+        function check(){
+            for(let i=0;i<9;i++){
+            if(boxes[i].disabled)
+                b[i]=1;
+            else
+                b[i]=0;
+        }}
+      
+       function displays(){ let display=document.getElementById("wins");
+             display.value=`Win of X is : ${winX}\n\nWin of O is : ${winO}\n`;}
+        displays();
+    </script>
+</html>
